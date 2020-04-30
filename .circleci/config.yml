@@ -1,6 +1,23 @@
 version: 2.1
+
+workflows:
+    version: 2
+    commit:
+      jobs:
+        - test1
+    nightly:
+      triggers:
+        - schedule:
+            cron: "0 20 * * *"
+            filters:
+              branches:
+                only:
+                  - master
+      jobs:
+        - test1
+
 jobs:
-  build:
+  test1:
     docker: 
       - image: circleci/node:4.8.2
     steps:
